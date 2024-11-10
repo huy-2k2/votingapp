@@ -1,0 +1,40 @@
+/* Áp dụng cho toàn bộ trang */
+::-webkit-scrollbar {
+  width: 8px; /* Độ rộng của thanh cuộn dọc */
+  height: 8px; /* Độ cao của thanh cuộn ngang */
+}
+
+/* Track của thanh cuộn (phần nền phía sau thanh cuộn) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Màu nền của track */
+  border-radius: 10px; /* Tùy chọn làm tròn track */
+}
+
+/* Thanh cuộn (scrollbar) */
+::-webkit-scrollbar-thumb {
+  background-color: #69b1eb5e; /* Màu xanh dương nhạt cho thanh cuộn */
+  border-radius: 10px; /* Tùy chọn làm tròn thanh cuộn */
+  border: 2px solid #f1f1f1; /* Để tạo khoảng cách nhỏ giữa track và thumb */
+}
+
+/* Thanh cuộn khi hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #69b1eb5e; /* Đổi màu khi người dùng hover lên thanh cuộn */
+}
+
+:root {
+  --v-input-control-height: 40px;
+}
+
+.text-limit {
+  white-space: nowrap; /* Ngăn không cho dòng văn bản xuống dòng */
+  overflow: hidden; /* Ẩn văn bản vượt quá kích thước */
+  text-overflow: ellipsis; /* Hiển thị dấu ba chấm khi văn bản bị cắt */
+  max-width: 100%;
+  display: inline-block;
+  padding-right: 5px; /* Khoảng cách bên trong */
+}
+
+.popup {
+  margin: auto;
+}

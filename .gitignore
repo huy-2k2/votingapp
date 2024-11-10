@@ -1,0 +1,43 @@
+# Ignore Git folder
+.git/
+
+# ASP.NET Core / .NET Files (within project folders inside voting-app-backend)
+voting-app-backend/**/bin/
+voting-app-backend/**/obj/
+voting-app-backend/**/*.swp
+voting-app-backend/**/*.user
+voting-app-backend/**/*.rsuser
+voting-app-backend/**/*.suo
+voting-app-backend/**/*.vcxproj.user
+voting-app-backend/**/*.xproj.user
+voting-app-backend/**/*.lock.json
+voting-app-backend/**/*.log
+voting-app-backend/appsettings*.json
+voting-app-backend/TestResults/
+voting-app-backend/*.db
+voting-app-backend/*.bak
+voting-app-backend/.vs/
+# Solution and user-specific files
+voting-app-backend/*.sln
+voting-app-backend/*.rsuser
+voting-app-backend/*.suo
+voting-app-backend/*.user
+voting-app-backend/*.userosscache
+voting-app-backend/*.sln.docstates
+
+# Node.js Files in Frontend
+voting-app-frontend/node_modules/
+voting-app-frontend/dist/
+voting-app-frontend/package-lock.json
+voting-app-frontend/yarn.lock
+voting-app-frontend/npm-debug.log*
+voting-app-frontend/yarn
+
+
+# Node.js Files in Frontend
+voting-app-fe/node_modules/
+voting-app-fe/dist/
+voting-app-fe/package-lock.json
+voting-app-fe/yarn.lock
+voting-app-fe/npm-debug.log*
+voting-app-fe/yarn
