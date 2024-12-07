@@ -13,6 +13,8 @@ using voting_app.application;
 using voting_app.share.Constant;
 using voting_app.share.Contract;
 using voting_app.share.Service;
+using voting_app.core.Contract;
+using voting_app.infrastructure.Service;
 
 namespace voting_app.api
 {
@@ -30,6 +32,8 @@ namespace voting_app.api
             builder.Services.AddScoped<IAnswerRepository, AnswerRepository>();
 
 
+            // add other infra service
+            builder.Services.AddScoped<IMailSender, MailkitMailSender>();
         }
 
         public static void AddApplicationService(this WebApplicationBuilder builder)
@@ -38,6 +42,9 @@ namespace voting_app.api
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IVoteService, VoteService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IAnswerService, AnswerService>();
+            builder.Services.AddScoped<IResultService, ResultService>();
         }
 
         public static void AddOtherService(this WebApplicationBuilder builder)
@@ -68,6 +75,15 @@ namespace voting_app.api
             builder.Services.AddSingleton<ConnectionConfig>(connectionConfig);
 
 
+            var emailServiceConfig = new EmailServiceConfig();
+            builder.Configuration.GetSection(KeyConfig.EMAIL_SERVICE).Bind(emailServiceConfig);
+            builder.Services.AddSingleton<EmailServiceConfig>(emailServiceConfig);
+
+
+
+            var voteConfig = new VoteConfig();
+            builder.Configuration.GetSection(KeyConfig.VOTE).Bind(voteConfig);
+            builder.Services.AddSingleton<VoteConfig>(voteConfig);
         }
     }
 }

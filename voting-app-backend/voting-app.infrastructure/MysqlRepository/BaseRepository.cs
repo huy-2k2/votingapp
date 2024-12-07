@@ -14,6 +14,7 @@ using voting_app.core.Repository;
 using voting_app.share.Common;
 using voting_app.share.Contract;
 using voting_app.share.CustomAttribute;
+using voting_app.share.Param;
 
 namespace voting_app.infrastructure.MysqlRepository
 {
@@ -144,6 +145,25 @@ namespace voting_app.infrastructure.MysqlRepository
 
             detailProperty.SetValue(masterEntity, detailEntities);
 
+        }
+
+        public async Task<IEnumerable<TEntity>> GetByFilterAsync(WhereParameter whereParameter)
+        {
+            var listProperty = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttribute<NotMapAttribute>() is null).ToList();
+            var sql = $"SELECT {string.Join(",", listProperty.Select(p => p.Name))} FROM {GetTableName()}";
+
+            var whereData = whereParameter.ToMySql();
+
+            sql = $"{sql} WHERE {whereData.Item2}";
+
+            var param = whereData.Item1;
+
+
+            var cnn = await connectionManager.GetConnectionAsync();
+
+            var listEntity = await cnn.QueryAsync<TEntity>(sql, param);
+
+            return listEntity;
         }
     }
 }

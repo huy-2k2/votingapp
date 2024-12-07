@@ -6,8 +6,8 @@
                 clearable></v-text-field>
             <v-text-field label="Thời gian bình chọn" v-model.number="voteTime" type="number"
                 :rules="[...requireNumberRule, ...numberRules]"></v-text-field>
-            <v-text-field label="Số lượng người tham gia" v-model.number="totalJoiner" type="number"
-                :rules="numberRules"></v-text-field>
+            <v-text-field v-if="!isSendQrEmail" label="Số lượng người tham gia" v-model.number="totalJoiner"
+                type="number" :rules="numberRules"></v-text-field>
             <div class="flex items-center justify-start gap-x-5">
                 <v-checkbox v-model="isSendQrEmail" label="Gửi QR qua Email"></v-checkbox>
                 <v-checkbox v-show="isSendQrEmail == false" v-model="isRequireName"
@@ -28,6 +28,7 @@
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { requireNumberRule, numberRules, selectRules, requireStringRule } from '@/until/ruleValidate';
+import { useEmailLoader } from '@/composition/emailComposition';
 export default {
     name: 'AddNewStepOne',
     emits: ['submit'],
@@ -40,14 +41,7 @@ export default {
 
         const formRef = ref(null);
         const isFormValid = ref(null);
-        const emails = ref([
-            {
-                email: 'ptvan@gmail.com'
-            },
-            {
-                email: 'ttanh@gmail.com'
-            },
-        ]);
+        const { emailsByUser: emails } = useEmailLoader();
 
         const voteTitle = computed({
             get: () => store.getters['addnew/stepOne'].voteTitle,

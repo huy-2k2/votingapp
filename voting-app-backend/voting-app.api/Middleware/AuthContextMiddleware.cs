@@ -82,7 +82,7 @@ namespace voting_app.api.Middleware
                     }
                     catch (Exception ex)
                     {
-                        context.Response.StatusCode = 999;
+                        context.Response.StatusCode = 500;
                     }
 
 

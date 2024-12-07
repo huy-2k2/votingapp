@@ -97,7 +97,7 @@ namespace voting_app.application.Service
 
             var token = new JwtSecurityToken(
               claims: claims,
-              expires: DateTime.Now.AddHours(1), // Thời hạn của token (ở đây là 1 giờ)
+              expires: DateTime.Now.AddHours(expiredTime),
               signingCredentials: creds
             );
 

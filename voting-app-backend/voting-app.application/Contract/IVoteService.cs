@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,5 +11,10 @@ namespace voting_app.application.Contract
 {
     public interface IVoteService : ICRUDBaseService<VoteDto, VoteEntity>
     {
+
+        Task UpdateStatusAsync(int voteStatus, Guid voteID);
+
+
+        Task<IEnumerable<VoteDto>>  GetAllByUserId();
     }
 }

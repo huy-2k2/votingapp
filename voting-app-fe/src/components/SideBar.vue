@@ -24,13 +24,13 @@ export default {
         text: 'Danh sách',
         iconSrc: '/icon/listVoted.svg',
         id: 'listVote',
-        route: '/list',
+        route: '/app/list',
         isActive: true,
       },
       {
         text: 'Thêm mới',
         iconSrc: '/icon/addVote.svg',
-        route: '/new',
+        route: '/app/new',
         id: 'addNew'
       }
     ]);

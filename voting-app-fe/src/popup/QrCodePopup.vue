@@ -3,6 +3,7 @@
         <h1 class="text-lg">{{ voteEntity.voteTitle }}</h1>
         <div class="flex items-center justify-start gap-x-4">
             <div class="">Số lượng câu hỏi: {{ voteEntity.questions?.length }}</div>
+            <div v-show="voteEntity?.totalJoiner" class="">Số người tham gia: {{ voteEntity?.totalJoiner }}</div>
             <div class="flex items-center justify-start gap-x-1">
                 <div>Yêu cầu nhập tên: </div>
                 <div :class="`${voteEntity.isRequireName ? 'text-green-600' : 'text-red-600'} mb-[-1px]`">
@@ -10,26 +11,35 @@
                     <i v-else class="fa-solid fa-xmark"></i>
                 </div>
             </div>
-            <div v-show="voteEntity?.totalJoiner" class="">Số người tham gia: {{ voteEntity?.totalJoiner }}</div>
         </div>
         <div>
             <div>Tổng thời gian bình chọn: {{ voteEntity?.voteTime }} phút</div>
         </div>
         <div class="mt-5">
             <div class="flex items-center justify-center text-base">
-                <countdown-timer v-if="voteEntity.createdDate" :startTime="voteEntity.createdDate" :durationMinutes="voteEntity.voteTime"></countdown-timer>
+                <countdown-timer v-model="leftTime" v-if="voteEntity.createdDate" :startTime="voteEntity.createdDate"
+                    :durationMinutes="voteEntity.voteTime" :isStoped="voteEntity.voteStatus == 2"></countdown-timer>
             </div>
-            <div class="text-center">{{url}}</div>
+            <div class="text-center">{{ url }}</div>
             <div class="flex items-center justify-center">
                 <v-tooltip text="Tải xuống mã QR">
                     <template v-slot:activator="{ props }">
-                        <canvas @click="downloadQRCode " class="cursor-pointer" v-bind="props" ref="qrcodeCanvasRef"></canvas>
+                        <div class="relative">
+                            <div v-show="voteEntity.voteStatus == 2 || leftTime == 0"
+                                class="flex items-center justify-center absolute inset-0 qr-blur">
+                                <div class="font-bold text-lg">Hết hiệu lực</div>
+                            </div>
+                            <canvas @click="downloadQRCode" class="cursor-pointer" v-bind="props"
+                                ref="qrcodeCanvasRef"></canvas>
+                        </div>
                     </template>
                 </v-tooltip>
             </div>
         </div>
-        <div class="flex justify-end gap-x-3">
-            <v-btn @click="handleStop" class="normal-case">Dừng bình chọn</v-btn>
+        <div class="flex justify-end gap-x-3 mt-5">
+            <v-btn :disabled="voteEntity.voteStatus == 2 || leftTime == 0" @click="handleStop" class="normal-case">
+                Dừng bình chọn
+            </v-btn>
             <!-- <v-btn color="secondary" class="normal-case">Tải mã QR</v-btn> -->
             <v-btn color="primary" @click="handleClose" class="normal-case">Đóng</v-btn>
         </div>
@@ -45,7 +55,7 @@ import CountdownTimer from '@/components/CountdownTimer.vue';
 
 export default {
     name: 'QrCodePopup',
-    components: {CountdownTimer},
+    components: { CountdownTimer },
     props: {
         popup: {
             type: Object,
@@ -57,6 +67,7 @@ export default {
         const voteEntity = ref({});
         const qrcodeCanvasRef = ref(null);
         const url = ref(null);
+        const leftTime = ref(null);
 
         async function generateQRCode() {
             try {
@@ -68,7 +79,7 @@ export default {
             }
         }
 
-        function  downloadQRCode() {
+        function downloadQRCode() {
             const canvas = qrcodeCanvasRef.value
             const link = document.createElement('a')
             link.href = canvas.toDataURL('image/png')
@@ -82,8 +93,17 @@ export default {
             resolveCallback("1")
         }
 
-        onBeforeMount(async () => {
+        async function getVoteEntity() {
             voteEntity.value = await voteApi.getEntireAsync(props.popup?.metaData?.voteID);
+        }
+
+        async function handleStop() {
+            await voteApi.updateVoteStatusAsync(voteEntity.value.voteID, 2)
+            await getVoteEntity();
+        }
+
+        onBeforeMount(async () => {
+            await getVoteEntity();
 
         })
 
@@ -98,10 +118,16 @@ export default {
             qrcodeCanvasRef,
             url,
             downloadQRCode,
-            handleClose
+            handleClose,
+            handleStop,
+            leftTime
         }
     },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.qr-blur {
+    background-color: #ccccccea;
+}
+</style>

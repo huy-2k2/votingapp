@@ -22,6 +22,28 @@ const state = () => {
 }
 
 const mutations = {
+    reset(state) {
+        state.stepOne =
+             {
+                voteTitle: '',
+                voteTime: 0,
+                isSendQrEmail: false,
+                isRequireName: false,
+                totalJoiner: null,
+                emails: []
+            }
+
+            state.stepTwo = {
+                currentQuestion: {
+                    questionTitle: null,
+                    isMultiAnswer: false,
+                    isAnswerAddable: false,
+                    answers: [],
+                    id: null,
+                },
+                questions: []
+            }
+    },
     setStepOne(state, {value, field}) {
         state.stepOne[field] = value;
     },

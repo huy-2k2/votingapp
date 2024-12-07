@@ -38,3 +38,20 @@
 .popup {
   margin: auto;
 }
+
+.cell-check {
+  color: #71bb40;
+}
+
+.cell-uncheck {
+  color: red;
+}
+
+.table .v-data-table__tr {
+  cursor: pointer;
+}
+
+.table .v-data-table__tr:hover {
+  background-color: #e0f7fa; /* Màu nền khi hover */
+  transition: background-color 0.3s ease; /* Hiệu ứng mượt */
+}

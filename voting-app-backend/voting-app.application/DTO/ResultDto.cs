@@ -10,7 +10,10 @@ namespace voting_app.application.DTO
     public class ResultDto
     {
         public Guid ResultID { get; set; }
-        public string SubmitterName { get; set; } = string.Empty;
+        public string? SubmitterName { get; set; } = string.Empty;
+        public Guid VoteID { get; set; }
+
+        public Guid? EmailID { get; set; }
 
         public IEnumerable<ResultDetailDto> ResultDetails { get; set; }
     }

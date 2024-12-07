@@ -21,13 +21,14 @@ import { onMounted } from 'vue';
 
 import { useStore } from 'vuex';
 import authApi from '@/api/authApi'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
 export default {
     name: 'LoginPage',
     components: {},
     setup() {
-        const router = useRouter();
+        const router = useRouter()
+
         const store = useStore();
 
 

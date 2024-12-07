@@ -14,7 +14,7 @@ namespace voting_app.application.Service
 {
     public class UserService : CRUDBaseService<UserDto, UserEntty>, IUserService
     {
-        public UserService(IUserRepository userRepository, IMapper mapper, IConnectionManager connectionManager) : base(userRepository, mapper, connectionManager) { 
+        public UserService(IUserRepository userRepository, IServiceProvider serviceProvider) : base(userRepository, serviceProvider) { 
         
         }
 

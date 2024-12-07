@@ -11,5 +11,7 @@ namespace voting_app.share.Enum
         Equal = 1,
         NotEqual = 2,
         IN = 3,
+        Null = 4,
+        NotNull = 5,
     }
 }

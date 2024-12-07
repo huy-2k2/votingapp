@@ -18,6 +18,7 @@ import { onMounted, ref } from 'vue';
 import commonFunction from '@/until/commonFunction';
 import { useRouter } from 'vue-router';
 import QrCodePopup from '@/popup/QrCodePopup.vue';
+import { useStore } from 'vuex';
 
 export default {
     name: 'AddNew',
@@ -33,7 +34,7 @@ export default {
                 title: 'Nhập nội dung câu hỏi',
             }
         ]);
-
+        const store = useStore();
         const isDone = ref(false);
 
         const currentStepIndex = ref(0);
@@ -45,14 +46,13 @@ export default {
             // nếu gửi qr vào email thì chỉ show thông báo
             if (voteEntity.isSendQrEmail) {
                 await commonFunction.showDialog('Thông báo', 'Đường dẫn đến cuộc bình chọn đã được gửi vào Email', [{ text: 'Đóng', value: 1, color: 'primary' }])
-                router.push(`/list/${voteEntity.voteID}`);
             }
             // nếu không thì phải show form QR
             else {
                 const qrPopupResult = await commonFunction.showPopup({ component: QrCodePopup, metaData: { voteID: voteEntity.voteID } });
             }
-
-            router.push(`/list/${voteEntity.voteID}`);
+            store.commit('addnew/reset'),
+                router.push(`/app/list?voteID=${voteEntity.voteID}`);
         }
 
         onMounted(() => {

@@ -52,7 +52,7 @@ namespace voting_app.api
 
 
             app.UseMiddleware<AuthContextMiddleware>();
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
 
             app.UseAuthorization();

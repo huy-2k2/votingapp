@@ -1,6 +1,7 @@
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted,  } from 'vue'
+import { watchEffect } from 'vue'
 
-export function useCountDownTimer(startTime, durationMinutes) {
+function useCountDownTimer(startTime, durationMinutes, isStoped) {
     const formattedTime = ref('')
     const lefttime = ref(null);
     const callBackInterval = ref(null);
@@ -23,9 +24,21 @@ export function useCountDownTimer(startTime, durationMinutes) {
         return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     }
 
+
+    watchEffect(() => {
+        if(isStoped.value) {
+            clearInterval(callBackInterval.value)
+        }
+    })
+
     onMounted(() => {
        callBackInterval.value = setInterval(() => {
             lefttime.value = (60 * durationMinutes) - getSecondsBetweenDates(new Date(), new Date(startTime));
+
+            if(lefttime.value < 0) {
+                lefttime.value = 0;
+            }
+
             formattedTime.value = formatTime(lefttime.value);
        }, 1000)
     })
@@ -38,3 +51,6 @@ export function useCountDownTimer(startTime, durationMinutes) {
         lefttime
     }
 }
+
+
+export {useCountDownTimer}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using voting_app.share.Param;
 
 namespace voting_app.core.Repository
 {
@@ -13,5 +14,7 @@ namespace voting_app.core.Repository
         Task DeleteAsync(TEntity entity);
 
         Task CreateAsync(TEntity entity);
+
+        Task UpdateByFilterAsync(List<UpdateField> updateFields, WhereParameter whereParameter);
     }
 }

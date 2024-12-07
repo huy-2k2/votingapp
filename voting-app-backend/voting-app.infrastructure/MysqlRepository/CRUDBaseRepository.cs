@@ -11,6 +11,7 @@ using voting_app.core.Entity;
 using voting_app.core.Repository;
 using voting_app.share.Contract;
 using voting_app.share.CustomAttribute;
+using voting_app.share.Param;
 
 namespace voting_app.infrastructure.MysqlRepository
 {
@@ -156,5 +157,35 @@ namespace voting_app.infrastructure.MysqlRepository
 
         }
 
+        public async Task UpdateByFilterAsync(List<UpdateField> updateFields, WhereParameter whereParameter)
+        {
+            var sql = $"UPDATE {GetTableName()} SET {string.Join(",", updateFields.Select(x => $"{x.FieldName} = @{x.FieldName}"))}";
+
+            var param = new Dictionary<string, object>();
+
+            updateFields.ForEach(updatefield =>
+            {
+                param.Add($"@{updatefield.FieldName}", updatefield.FieldValue);
+            });
+
+
+            if(whereParameter.FilterItems.Count > 0)
+            {
+                var whereData = whereParameter.ToMySql();
+
+                sql = $"{sql} WHERE {whereData.Item2}";
+
+                foreach(var paramWhere in whereData.Item1)
+                {
+                    param.Add(paramWhere.Key, paramWhere.Value);
+                }
+            }
+
+            sql += ";";
+
+            var cnn = await connectionManager.GetConnectionAsync();
+
+            await cnn.ExecuteAsync(sql, param);
+        }
     }
 }

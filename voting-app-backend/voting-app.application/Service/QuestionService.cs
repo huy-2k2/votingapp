@@ -14,7 +14,7 @@ namespace voting_app.application.Service
 {
     public class QuestionService : CRUDBaseService<QuestionDto, QuestionEntity>, IQuestionService
     {
-        public QuestionService(IQuestionRepository questionRepository, IMapper mapper, IConnectionManager connectionManager) : base(questionRepository, mapper, connectionManager)
+        public QuestionService(IQuestionRepository questionRepository, IServiceProvider serviceProvider) : base(questionRepository, serviceProvider)
         {
 
         }

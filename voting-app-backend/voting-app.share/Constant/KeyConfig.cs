@@ -10,7 +10,9 @@ namespace voting_app.share.Constant
     {
         public static string CONNECTION = "ConnectionConfig";
         public static string TOKEN = "TokenConfig";
+        public static string EMAIL_SERVICE = "EmailService";
         public static string ENVIRONMENT = "Environment";
+        public static string VOTE = "Vote";
 
     }
 }

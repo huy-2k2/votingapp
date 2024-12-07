@@ -16,4 +16,13 @@ export default {
         const {data} = await baseHandleAuthApi.get(`/entire?id=${id}`,)
         return data
     },
+
+    async updateVoteStatusAsync(voteID, voteStatus) {
+        await baseHandleAuthApi.put(`/voteStatus?voteID=${voteID}&status=${voteStatus}`,)
+    },
+
+    async getListByUserId() {
+        const {data} = await baseHandleAuthApi.get('/list');
+        return data;
+    }
 }

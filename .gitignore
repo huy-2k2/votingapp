@@ -17,8 +17,10 @@ voting-app-backend/TestResults/
 voting-app-backend/*.db
 voting-app-backend/*.bak
 voting-app-backend/.vs/
+voting-app-backend/packages/
+voting-app-backend/publish/
+
 # Solution and user-specific files
-voting-app-backend/*.sln
 voting-app-backend/*.rsuser
 voting-app-backend/*.suo
 voting-app-backend/*.user

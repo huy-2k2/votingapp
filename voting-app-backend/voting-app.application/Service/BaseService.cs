@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using voting_app.application.Contract;
 using voting_app.core.Entity;
 using voting_app.core.Repository;
 using voting_app.share.Common;
+using voting_app.share.Contract;
 
 namespace voting_app.application.Service
 {
@@ -15,11 +17,17 @@ namespace voting_app.application.Service
     {
         protected readonly IMapper _mapper;
         protected readonly IBaseRepository<TEntity> _baseRepository;
+        protected readonly IContextService _contextService;
+        protected IConnectionManager _connectionManager;
 
-        public BaseService(IBaseRepository<TEntity> baseRepository, IMapper mapper)
+
+        public BaseService(IBaseRepository<TEntity> baseRepository, IServiceProvider serviceProvider)
         {
             _baseRepository = baseRepository;
-            _mapper = mapper;
+            _mapper = serviceProvider.GetRequiredService<IMapper>(); ;
+            _contextService =  serviceProvider.GetRequiredService<IContextService>();
+            _connectionManager = serviceProvider.GetRequiredService<IConnectionManager>();
+
         }
 
         public async Task<TDto> GetByIdAsync(Guid id)

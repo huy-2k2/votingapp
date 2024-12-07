@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace voting_app.share.Constant
+namespace voting_app.share.Config
 {
-    public static class FilterOperator
+    public class VoteConfig
     {
-        public const string EQUAL = "=";
+        public string VoteUrl { get; set; }
     }
 }

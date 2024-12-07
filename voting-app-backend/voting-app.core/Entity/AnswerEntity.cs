@@ -18,6 +18,7 @@ namespace voting_app.core.Entity
         public Guid QuestionID { get; set; }
         public string AnswerContent { get; set; } = string.Empty;
 
+        public bool IsCustom { get; set; }
 
         [NotMap]
         [Detail(typeof(IResultDetailRepository), typeof(ResultDetailEntity), nameof(ResultDetailEntity.AnswerID))]

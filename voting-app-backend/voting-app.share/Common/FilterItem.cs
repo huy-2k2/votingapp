@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using voting_app.share.Enum;
 
 namespace voting_app.share.Common
 {
@@ -11,30 +12,66 @@ namespace voting_app.share.Common
         /// <summary>
         /// Field cần kiểm tra
         /// </summary>
-        public string Field { get; set; }
+        public string FieldName { get; set; }
 
         /// <summary>
         /// Biểu thức kiểm tra
         /// </summary>
-        public string Operator { get; set; }
+        public WhereOperator Operator { get; set; }
 
         /// <summary>
         /// giá trị kiểm tra
         /// </summary>
-        public object Value { get; set; }
+        public object FieldValue { get; set; }
 
 
         /// <summary>
         /// Điều kiện hoạc
         /// </summary>
-        public FilterItem OrFilterItem { get; set; }
+        public List<FilterItem> OrFilterItems { get; set; }
 
-        /// <summary>
-        /// Hàm này kiểm tra xem giá trị của Operator có là 1 trong các giá trị của Constant FilterOperator hay không
-        /// </summary>
-        public bool IsValidOperator()
+
+        private string GetOperatorString()
         {
-            return true;
+            switch (Operator)
+            {
+                case WhereOperator.Equal:
+                    return "=";
+                case WhereOperator.NotEqual:
+                    return "<>";
+                case WhereOperator.IN:
+                    return "IN";
+                case WhereOperator.Null:
+                    return "IS NULL";
+                case WhereOperator.NotNull:
+                    return "IS NOT NULL";
+                default:
+                    throw new Exception("NotValidOperator");
+            }
+        }
+
+
+        private (Dictionary<string, object>, string) SelfToMySql()
+        {
+            var query = $"( {FieldName} {GetOperatorString()}";
+
+            var param = new Dictionary<string, object>();
+
+            if (FieldValue is not null)
+            {
+                var uuid = Guid.NewGuid();
+
+                var uuidString = uuid.ToString().Replace("-", "_");
+
+                query += $" @{uuidString}";
+
+                param.Add(uuidString, FieldValue);
+            }
+
+            query += " )";
+
+
+            return (Param: param, Query: query);
         }
 
 
@@ -42,21 +79,33 @@ namespace voting_app.share.Common
         /// Chuyền từ Filter về string
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public (Dictionary<string, object>, string) ToMySql()
         {
-            return base.ToString();
-        }
+            var (Param, Query) = SelfToMySql();
 
-        /// <summary>
-        /// chuyển từ string về filter item
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static FilterItem GetFilterItem(string filter)
-        {
-            throw new NotImplementedException();
-        }
+            if (OrFilterItems is null || OrFilterItems.Count == 0)
+            {
+                return (Param, Query);
+            }
 
+            var listOrQuery = new List<string>();
+
+            foreach (var orfilterItem in OrFilterItems)
+            {
+                var orData = orfilterItem.ToMySql();
+
+                listOrQuery.Add($"( {orData.Item2} )");
+
+                foreach (var orParam in orData.Item1)
+                {
+                   Param.Add(orParam.Key, orParam.Value);
+                }
+            }
+
+
+            Query = $"( {Query} OR ({string.Join("AND", listOrQuery)}))";
+
+            return (Param, Query);
+        }
     }
 }

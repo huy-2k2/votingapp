@@ -17,12 +17,10 @@ namespace voting_app.application.Service
 
         private ICRUDBaseRepository<TEntity> _repository;
 
-        protected IConnectionManager _connectionManager;
 
-        public CRUDBaseService(ICRUDBaseRepository<TEntity> repository, IMapper mapper, IConnectionManager connectionManager) : base(repository, mapper)
+        public CRUDBaseService(ICRUDBaseRepository<TEntity> repository, IServiceProvider serviceProvider) : base(repository, serviceProvider)
         {
             _repository = repository;
-            _connectionManager = connectionManager;
         }
 
         public async Task<TDto> CreateAsync(TDto dto)

@@ -13,6 +13,8 @@ namespace voting_app.application.DTO
         public Guid QuestionID { get; set; }
         public string AnswerContent { get; set; } = string.Empty;
 
+        public bool IsCustom { get; set; }
+
         public IEnumerable<ResultDetailDto> ResultDetails { get; set; }
     }
 }

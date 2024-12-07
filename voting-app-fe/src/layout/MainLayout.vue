@@ -19,6 +19,10 @@ import SideBarVue from '@/components/SideBar.vue';
 import { onBeforeMount } from 'vue';
 import authApi from '@/api/authApi';
 
+import { Chart, registerables } from 'chart.js';
+
+Chart.register(...registerables); // Đăng ký các thành phần cần thiết
+
 export default {
     name: 'MainLayout',
     components: { TopNavVue, SideBarVue },

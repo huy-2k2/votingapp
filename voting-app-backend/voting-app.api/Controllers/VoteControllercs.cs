@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using voting_app.application.Contract;
 using voting_app.application.DTO;
 using voting_app.share.Contract;
@@ -31,6 +32,7 @@ namespace voting_app.api.Controllers
         }
 
         [HttpGet("entire")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEntireAsync([FromQuery] Guid id)
         {
 
@@ -38,6 +40,25 @@ namespace voting_app.api.Controllers
             _connectionManager.DisposeConnection();
             return Ok(result);
         }
+
+
+        [HttpPut("voteStatus")]
+        public async Task<IActionResult> UpdateStatusAsync([FromQuery] Guid voteID, [FromQuery] int status)
+        {
+            await _voteService.UpdateStatusAsync(status, voteID);
+            _connectionManager.DisposeConnection();
+            return Ok();
+        }
+
+
+        [HttpGet("list")]
+        public async Task<IActionResult> GetAllByUserIdAsync()
+        {
+            var result = await _voteService.GetAllByUserId();
+            _connectionManager.DisposeConnection();
+            return Ok(result);
+        }
+
 
     }
 }
