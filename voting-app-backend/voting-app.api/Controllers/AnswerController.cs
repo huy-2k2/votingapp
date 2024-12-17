@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using voting_app.application.Contract;
 using voting_app.application.DTO;
 
@@ -16,6 +17,7 @@ namespace voting_app.api.Controllers
         }
 
         [HttpPost("multi")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateMultiAsync([FromBody]List<AnswerDto> answers)
         {
             await _answerService.CreateMultiAsync(answers);

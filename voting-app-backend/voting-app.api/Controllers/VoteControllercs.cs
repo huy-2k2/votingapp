@@ -59,6 +59,5 @@ namespace voting_app.api.Controllers
             return Ok(result);
         }
 
-
     }
 }

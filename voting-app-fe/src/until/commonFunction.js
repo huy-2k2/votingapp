@@ -35,6 +35,14 @@ export default  {
           hour12: false,
         };
         return new Intl.DateTimeFormat('en-GB', options).format(date).replace(',', '');
+    },
+
+    loadSource(url) {
+        if(window.cdnSite) {
+            return window.cdnSite + url; 
+        } else {
+            return url;
+        }
     }
 
 

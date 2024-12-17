@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using voting_app.application.Contract;
 using voting_app.application.DTO;
 using voting_app.share.Contract;
@@ -21,6 +22,7 @@ namespace voting_app.api.Controllers
         }
 
         [HttpPost()]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateAsync([FromBody] ResultDto dto)
         {
             var result = await _resultService.CreateAsync(dto);

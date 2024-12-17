@@ -7,8 +7,9 @@ module.exports = defineConfig({
   },
 
   //publicPath: process.env.NODE_ENV !== 'development' ? 'CONFIG_CDN_URL' : '/',
-  publicPath: process.env.NODE_ENV !== 'development' ? 'http://votingappcdn.com:5678' : '/',
+  publicPath: process.env.NODE_ENV !== 'development' ? 'CDN_URL_REPLACE' : '/',
   lintOnSave: false,
+  productionSourceMap: false,
 
   pluginOptions: {
     vuetify: {

@@ -23,7 +23,7 @@
                             <template v-slot:activator="{ props }">
                                 <div v-bind="props" @click="handleRemoveAnswer(index)"
                                     class="answer-item-remove  w-6 flex-shrink-0 cursor-pointer">
-                                    <img :src="require('@/assets/icon/close.svg')" alt="">
+                                    <img :src="commonFunction.loadSource('/icon/close.svg')" alt="">
                                 </div>
                             </template>
                         </v-tooltip>
@@ -93,6 +93,7 @@ import { useStore } from 'vuex';
 import { requireStringRule } from '@/until/ruleValidate'
 import { uuid } from 'vue-uuid';
 import voteApi from '@/api/voteApi';
+import commonFunction from '@/until/commonFunction';
 export default {
     name: 'AddNewStepTwo',
     emits: ['submit'],
@@ -227,7 +228,8 @@ export default {
             handleEditQuestion,
             questionId,
             handleDiscardEdit,
-            handleSubmitVote
+            handleSubmitVote,
+            commonFunction
         };
     },
 };

@@ -47,6 +47,7 @@ namespace voting_app.application.Service
                     var userDto = new UserDto
                     {
                         Email = payload.Email,
+                        CurrentVersion = "g1",
                     };
 
                     var userResult =  await _userService.CreateAsync(userDto);
@@ -57,6 +58,7 @@ namespace voting_app.application.Service
                 {
                     Email = payload.Email,
                     UserID = userData.UserID,
+
                 };
                 var tokenResult = createToken(userToken);
 

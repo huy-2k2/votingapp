@@ -4,7 +4,7 @@
       class="sidebar-item flex items-center justify-start gap-x-3 cursor-pointer px-2 py-2 rounded-md"
       active-class="isActive" v-for="item in items" :key="item.id">
       <div class="w-8">
-        <img :src="item.iconSrc" alt="">
+        <img :src="commonFunction.loadSource(item.iconSrc)" alt="">
       </div>
       <div class="text-lg font-medium">
         {{ item.text }}
@@ -14,6 +14,7 @@
 </template>
 <script>
 import { ref } from 'vue';
+import commonFunction from '@/until/commonFunction';
 
 export default {
   name: 'App',
@@ -37,6 +38,7 @@ export default {
 
     return {
       items,
+      commonFunction
     }
   },
 };

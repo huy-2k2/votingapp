@@ -1,0 +1,11 @@
+# Sử dụng Nginx để serve ứng dụng Vue.js đã build
+FROM nginx:stable-alpine AS production-stage
+
+# Copy các file build vào thư mục phục vụ của Nginx
+COPY ./dist_staging /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Khởi động Nginx
+CMD ["nginx", "-g", "daemon off;"]

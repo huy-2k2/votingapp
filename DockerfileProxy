@@ -1,0 +1,15 @@
+
+# Sử dụng ASP.NET Core Runtime để chạy ứng dụng
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+
+# Thiết lập thư mục làm việc trong container
+WORKDIR /app
+
+# Copy các file đã build từ stage build
+COPY  ./publish_proxy .
+
+# Mở cổng 80 cho ứng dụng
+EXPOSE 80
+
+# Khởi động ứng dụng
+ENTRYPOINT ["dotnet", "voting-app.proxy.dll"]

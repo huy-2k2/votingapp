@@ -13,6 +13,8 @@ namespace voting_app.share.Constant
         public static string EMAIL_SERVICE = "EmailService";
         public static string ENVIRONMENT = "Environment";
         public static string VOTE = "Vote";
+        public static string PROXY = "Proxy";
+
 
     }
 }

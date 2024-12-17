@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "voting-app.api", "voting-app.api\voting-app.api.csproj", "{CBF6FF7B-8112-49E5-BE48-12EDDA259D39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "voting-app.api", "voting-app.api\voting-app.api.csproj", "{CBF6FF7B-8112-49E5-BE48-12EDDA259D39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "voting-app.core", "voting-app.core\voting-app.core.csproj", "{385E49E8-43CF-45C6-87B7-F777E2B2FF5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "voting-app.core", "voting-app.core\voting-app.core.csproj", "{385E49E8-43CF-45C6-87B7-F777E2B2FF5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "voting-app.application", "voting-app.application\voting-app.application.csproj", "{8155E2E9-EAB2-4154-8C75-1ABBE31F8B6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "voting-app.application", "voting-app.application\voting-app.application.csproj", "{8155E2E9-EAB2-4154-8C75-1ABBE31F8B6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "voting-app.infrastructure", "voting-app.infrastructure\voting-app.infrastructure.csproj", "{50D5B738-381D-4D8B-BCF9-EB1035FDA4A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "voting-app.infrastructure", "voting-app.infrastructure\voting-app.infrastructure.csproj", "{50D5B738-381D-4D8B-BCF9-EB1035FDA4A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "voting-app.share", "voting-app.share\voting-app.share.csproj", "{470C4B66-0FBD-4720-A1B6-06076085F584}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "voting-app.share", "voting-app.share\voting-app.share.csproj", "{470C4B66-0FBD-4720-A1B6-06076085F584}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "voting-app.hostbase", "voting-app.hostbase\voting-app.hostbase.csproj", "{60852FA4-BDA1-45AB-8684-CE3656CC99D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "voting-app.proxy", "voting-app.proxy\voting-app.proxy.csproj", "{8355749C-576C-42F7-B8D6-7849962CD702}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{470C4B66-0FBD-4720-A1B6-06076085F584}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{470C4B66-0FBD-4720-A1B6-06076085F584}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{470C4B66-0FBD-4720-A1B6-06076085F584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60852FA4-BDA1-45AB-8684-CE3656CC99D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60852FA4-BDA1-45AB-8684-CE3656CC99D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60852FA4-BDA1-45AB-8684-CE3656CC99D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60852FA4-BDA1-45AB-8684-CE3656CC99D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8355749C-576C-42F7-B8D6-7849962CD702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8355749C-576C-42F7-B8D6-7849962CD702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8355749C-576C-42F7-B8D6-7849962CD702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8355749C-576C-42F7-B8D6-7849962CD702}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

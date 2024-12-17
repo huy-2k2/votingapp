@@ -2,7 +2,7 @@
     <div class="login-container flex items-center justify-center h-[100vh]">
         <div class="login-content flex items-stretch justify-start rounded-lg overflow-hidden">
             <div class="w-[384px]">
-                <img class="object-contain" :src="require('@/assets/image/login.png')" alt="voting image">
+                <img class="object-contain" :src="commonFunction.loadSource('/login.png')" alt="voting image">
             </div>
             <div class="flex items-center justify-center bg-white px-8">
                 <div class="flex flex-col items-center">
@@ -18,11 +18,10 @@
 
 <script>
 import { onMounted } from 'vue';
-
 import { useStore } from 'vuex';
 import authApi from '@/api/authApi'
 import { useRouter } from 'vue-router'
-
+import commonFunction from '@/until/commonFunction';
 export default {
     name: 'LoginPage',
     components: {},
@@ -41,9 +40,11 @@ export default {
 
             // // set token backend trả về vào local storage
             localStorage.setItem('jwt-token', token);
+            document.cookie = `vta_token=${token}; path=/; domain=votingapp.online`;
             store.commit('common/setIsLoading', false);
 
             router.push('/');
+            window.location.reload();
         }
 
 
@@ -78,6 +79,7 @@ export default {
 
 
         return {
+            commonFunction
         }
     },
 };

@@ -15,8 +15,9 @@ using voting_app.share.Contract;
 using voting_app.share.Service;
 using voting_app.core.Contract;
 using voting_app.infrastructure.Service;
+using Microsoft.Extensions.Configuration;
 
-namespace voting_app.api
+namespace voting_app.hostbase
 {
     public static class HostBase
     {
@@ -60,6 +61,10 @@ namespace voting_app.api
 
             builder.Services.AddHttpContextAccessor();
 
+
+            // Cấu hình HttpClient để sử dụng DI
+            builder.Services.AddHttpClient();
+
         }
 
         public static void AddConfig(this WebApplicationBuilder builder)
@@ -84,6 +89,21 @@ namespace voting_app.api
             var voteConfig = new VoteConfig();
             builder.Configuration.GetSection(KeyConfig.VOTE).Bind(voteConfig);
             builder.Services.AddSingleton<VoteConfig>(voteConfig);
+        }
+
+
+        public static void AddProxyConfig(this WebApplicationBuilder builder)
+        {
+
+            var tokenConfig = new ProxyConfig();
+            builder.Configuration.GetSection(KeyConfig.PROXY).Bind(tokenConfig);
+            builder.Services.AddSingleton<ProxyConfig>(tokenConfig);
+        }
+
+        public static void AddProxyService(this WebApplicationBuilder builder)
+        {
+
+            builder.Services.AddScoped<IProxyService, ProxyService>();
         }
     }
 }

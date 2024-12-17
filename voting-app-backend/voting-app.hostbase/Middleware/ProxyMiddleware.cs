@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -9,15 +10,15 @@ using voting_app.infrastructure;
 using voting_app.share.Common;
 using voting_app.share.Config;
 
-namespace voting_app.api.Middleware
+namespace voting_app.hostbase.Middleware
 {
-    public class AuthContextMiddleware
+    public class ProxyMiddleware
     {
         private readonly TokenConfig _tokenConfig;
         private readonly RequestDelegate _next;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthContextMiddleware(RequestDelegate next, TokenConfig tokenConfig, IHttpContextAccessor httpContextAccessor)
+        public ProxyMiddleware(RequestDelegate next, TokenConfig tokenConfig, IHttpContextAccessor httpContextAccessor)
         {
             this._tokenConfig = tokenConfig;
             this._next = next;
@@ -28,27 +29,32 @@ namespace voting_app.api.Middleware
         public async Task Invoke(HttpContext context)
         {
 
-            // Kiểm tra xem API có attribute AllowAnonymous không
-            var endpoint = context.GetEndpoint();
-            if (endpoint?.Metadata?.GetMetadata<Microsoft.AspNetCore.Authorization.AllowAnonymousAttribute>() != null)
+            var authHeader = string.Empty;
+
+            var tokenCookie = context.Request.Cookies["vta_token"];
+            if (tokenCookie != null)
             {
-                // Nếu có [AllowAnonymous], bỏ qua việc giải mã token và tiếp tục middleware pipeline
+                authHeader = tokenCookie.ToString();
+            }
+
+            Console.WriteLine("1: ", authHeader);
+
+
+            if (string.IsNullOrEmpty(authHeader))
+            {
                 await _next(context);
                 return;
             }
+            var token = authHeader.Trim();
+            Console.WriteLine("2: ", authHeader);
 
-            // Lấy JWT token từ cookie
-            var authHeader = context.Request.Headers["Authorization"].ToString();
-            if (!authHeader.StartsWith("Bearer "))
-            {
-                context.Response.StatusCode = 401;
-                return;
-            }
-            var token = authHeader.Substring("Bearer ".Length).Trim();
+
 
             // Xử lý token (giải mã, xác thực, v.v.)
             if (!string.IsNullOrEmpty(token))
             {
+                Console.WriteLine("3: ", authHeader);
+
                 try
                 {
                     // Giải mã token
@@ -75,26 +81,16 @@ namespace voting_app.api.Middleware
                         Email = userEmail,
                     };
 
-                    try
-                    {
-                        await _next(context);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        context.Response.StatusCode = 500;
-                    }
-
-
+                    Console.WriteLine("4: ", userId);
                 }
-                catch (Exception ex)
+                finally
                 {
-                    context.Response.StatusCode = 401;
+                    await _next(context);
                 }
-            }
+            } 
             else
             {
-                context.Response.StatusCode = 401;
+                await _next(context);
             }
         }
     }

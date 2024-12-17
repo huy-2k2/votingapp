@@ -21,12 +21,15 @@ namespace voting_app.api
 
             // add config
             builder.AddConfig();
+            builder.AddProxyConfig();
 
             builder.AddOtherService();
             builder.AddInfrastructureRepo();
 
             // add repo, service
             builder.AddApplicationService();
+
+            builder.AddProxyService();
 
             builder.Services.AddCors(options =>
             {
@@ -52,7 +55,7 @@ namespace voting_app.api
             }
 
 
-            app.UseMiddleware<AuthContextMiddleware>();
+            app.UseMiddleware<ProxyMiddleware>();
             // app.UseHttpsRedirection();
 
 

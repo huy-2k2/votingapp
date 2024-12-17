@@ -1,18 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <RootNamespace>voting_app.hostbase</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>voting_app.api</RootNamespace>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\voting-app.application\voting-app.application.csproj" />
     <ProjectReference Include="..\voting-app.core\voting-app.core.csproj" />
-    <ProjectReference Include="..\voting-app.hostbase\voting-app.hostbase.csproj" />
     <ProjectReference Include="..\voting-app.infrastructure\voting-app.infrastructure.csproj" />
-    <ProjectReference Include="..\voting-app.share\voting-app.share.csproj" />
   </ItemGroup>
 
 </Project>

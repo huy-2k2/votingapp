@@ -12,5 +12,7 @@ namespace voting_app.application.DTO
 
 
         public string Email { get; set; }
+
+        public string CurrentVersion { get; set; }
     }
 }

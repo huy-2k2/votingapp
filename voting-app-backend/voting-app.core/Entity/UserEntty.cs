@@ -16,6 +16,8 @@ namespace voting_app.core.Entity
         public Guid UserID { get; set; }
 
         public string Email { get; set; }
+
+        public string CurrentVersion { get; set; }
         #endregion
 
         #region Method
